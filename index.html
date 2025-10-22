@@ -7,18 +7,18 @@
 <title>I'm Sorry, Ananya</title>
 <style>
 :root {
-  --bg: #000; /* Black background */
-  --card: #ffffff; /* White card */
-  --text: #222; /* Dark text */
+  --bg: #000;
+  --card: #ffffff;
+  --text: #1a1a1a;
   --muted: #555;
-  --highlight-bg: #fff9db; /* Soft gold highlight (matches 💛) */
-  --highlight-text: #d4a017;
+  --highlight: #d4a017; /* Gold for emotional emphasis */
+  --highlight-bg: #fff9e6;
 }
 
 html, body {
   height: 100%;
   margin: 0;
-  font-family: 'Inter', system-ui, Segoe UI, Arial, sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   background: var(--bg);
   display: flex;
   align-items: center;
@@ -30,182 +30,226 @@ html, body {
   width: 90%;
   max-width: 780px;
   background: var(--card);
-  border-radius: 18px;
-  padding: 34px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+  border-radius: 20px;
+  padding: 40px;
+  box-shadow: 0 12px 50px rgba(0, 0, 0, 0.4);
   position: relative;
   overflow: hidden;
-  border: 1px solid rgba(0,0,0,0.05);
+  border: 1px solid rgba(0,0,0,0.08);
+  line-height: 1.6;
 }
 
 h1 {
-  margin: 0 0 12px 0;
-  font-size: 30px;
+  margin: 0 0 14px 0;
+  font-size: 32px;
+  font-weight: 700;
   color: #000;
-  letter-spacing: 0.2px;
+  letter-spacing: -0.2px;
 }
 
 .sub {
-  font-size: 15px;
-  margin-bottom: 20px;
+  font-size: 16px;
+  margin-bottom: 24px;
   color: var(--muted);
+  font-weight: 500;
 }
 
 .message {
-  font-size: 18px;
-  line-height: 1.6;
+  font-size: 19px;
   color: var(--text);
-  min-height: 120px;
+  min-height: 140px;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.message.visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .highlight {
-  background-color: var(--highlight-bg);
-  color: #000;
+  color: var(--highlight);
   font-weight: 600;
-  padding: 0 4px;
-  border-radius: 3px;
+  position: relative;
+}
+
+.highlight::after {
+  content: '';
+  position: absolute;
+  bottom: 2px;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: var(--highlight-bg);
+  z-index: -1;
+  border-radius: 2px;
 }
 
 .meta {
-  margin-top: 24px;
+  margin-top: 28px;
   display: flex;
-  gap: 10px;
+  gap: 12px;
   align-items: center;
 }
 
 .from {
   font-weight: 600;
   color: var(--muted);
+  font-size: 17px;
 }
 
 .btn {
   margin-left: auto;
   background: transparent;
   border: 1px solid rgba(0,0,0,0.15);
-  padding: 8px 14px;
-  border-radius: 10px;
+  padding: 9px 18px;
+  border-radius: 12px;
   color: var(--muted);
   cursor: pointer;
-  transition: all 0.2s;
+  font-weight: 500;
+  transition: all 0.25s ease;
+  font-size: 15px;
 }
 
 .btn:hover {
-  border-color: #888;
-  color: #333;
+  border-color: var(--highlight);
+  color: var(--highlight);
 }
 
-/* Typing cursor */
-.typing {
-  display: inline-block;
-  border-right: 2px solid #000;
-  padding-right: 2px;
-  animation: blink 1s steps(2, start) infinite;
-}
-
-@keyframes blink {
-  to { border-color: transparent; }
-}
-
-/* Floating hearts – grayscale */
 .floating {
   position: absolute;
-  left: 12px;
-  bottom: -40px;
-  opacity: 0.6;
-  animation: floatUp 7s ease-in-out infinite;
+  left: 20px;
+  bottom: -30px;
+  opacity: 0.5;
+  animation: floatUp 8s ease-in-out infinite;
 }
 
 .floating svg {
-  width: 64px;
-  height: 64px;
+  width: 60px;
+  height: 60px;
+  opacity: 0.7;
 }
 
 @keyframes floatUp {
-  0% { transform: translateY(0) translateX(0) rotate(0) scale(0.9); opacity: 0.6; }
-  50% { transform: translateY(-120px) translateX(8px) rotate(10deg) scale(1.05); opacity: 0.9; }
-  100% { transform: translateY(-260px) translateX(-10px) rotate(-8deg) scale(0.9); opacity: 0.4; }
+  0% { transform: translateY(0) translateX(0) rotate(0); opacity: 0.5; }
+  50% { transform: translateY(-100px) translateX(10px) rotate(8deg); opacity: 0.9; }
+  100% { transform: translateY(-220px) translateX(-8px) rotate(-6deg); opacity: 0.3; }
 }
 
 footer {
   font-size: 13px;
   color: #777;
-  margin-top: 18px;
+  margin-top: 20px;
+  text-align: center;
 }
 
 @media (max-width: 560px) {
-  h1 { font-size: 22px; }
-  .card { padding: 20px; }
+  h1 { font-size: 24px; }
+  .card { padding: 24px; }
+  .message { font-size: 17px; }
 }
 </style>
 </head>
 <body>
-<div class="card" role="main" aria-label="Apology card for Ananya">
+<div class="card" role="main" aria-label="A sincere apology for Ananya">
   <h1>Hey Ananya —</h1>
-  <div class="sub">I messed up, and I want to say something from the heart.</div>
+  <div class="sub">I owe you a real apology.</div>
   <div class="message" id="message" aria-live="polite"></div>
+  
   <div class="meta">
     <div class="from">— <span id="senderName">Ansh</span></div>
     <button class="btn" id="replay">Replay</button>
   </div>
+  
   <div class="floating" aria-hidden="true">
     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M12 21s-7.5-4.35-9.1-8.02C1.86 8.9 6.1 5 12 9.5 17.9 5 22.14 8.9 21.1 12.98 19.5 16.65 12 21 12 21z" fill="#ccc"></path>
+      <path d="M12 21s-7.5-4.35-9.1-8.02C1.86 8.9 6.1 5 12 9.5 17.9 5 22.14 8.9 21.1 12.98 19.5 16.65 12 21 12 21z" fill="#e0e0e0"></path>
     </svg>
   </div>
-  <footer>Click <strong>Replay</strong> to see the message again.</footer>
+  
+  <footer>Click <strong>Replay</strong> to read again.</footer>
 </div>
 
 <script>
 const sender = "Ansh";
 document.getElementById('senderName').textContent = sender;
 
-// Apology text with key words wrapped in <span class="highlight">
-const apology = [
-  "I’m truly <span class=\"highlight\">sorry</span>, Ananya. I didn’t mean to <span class=\"highlight\">hurt</span> you.",
-  "You mean a lot to me and losing your <span class=\"highlight\">trust</span> hurts more than anything.",
-  "I take full <span class=\"highlight\">responsibility</span> for my mistake and I promise to do <span class=\"highlight\">better</span>.",
-  "If you're willing, I'd love to <span class=\"highlight\">talk</span>, <span class=\"highlight\">listen</span>, and make things right. 💛"
-].join(" ");
+// Updated message with key words to highlight
+const rawMessage = `I want to sincerely apologize, Ananya. I reacted without checking the facts first, and that was unfair.
+I value our friendship a lot, and I don’t want a misunderstanding to come between us.
+I take responsibility for my mistake and hope we can talk it out calmly.
+I promise to be more careful and communicate better going forward.`;
 
-const target = document.getElementById('message');
+// Words to highlight (case-insensitive)
+const highlightWords = [
+  'apologize', 'unfair', 'friendship', 'responsibility',
+  'calmly', 'careful', 'better'
+];
 
-function typeText(htmlText, el, speed = 28) {
-  el.innerHTML = "";
-  let i = 0;
-  const tempDiv = document.createElement('div');
-  tempDiv.innerHTML = htmlText;
-  const fullText = tempDiv.innerText; // plain text for typing
+function highlightText(text, words) {
+  let result = text.replace(/\n/g, '<br>');
+  const regex = new RegExp(`\\b(${words.join('|')})\\b`, 'gi');
+  result = result.replace(regex, '<span class="highlight">$1</span>');
+  return result;
+}
 
-  const wrapper = document.createElement('span');
-  el.appendChild(wrapper);
+const formattedMessage = highlightText(rawMessage, highlightWords);
+const messageEl = document.getElementById('message');
 
-  function step() {
-    if (i < fullText.length) {
-      // Get current char
-      const char = fullText.charAt(i);
-      wrapper.textContent += char;
+function animateMessage(html) {
+  messageEl.innerHTML = '';
+  messageEl.classList.remove('visible');
+  
+  // Split into sentences (by period, question mark, or line break)
+  const sentences = rawMessage.split(/(?<=[.!?])\s+/);
+  
+  let index = 0;
+  const container = document.createElement('div');
+  messageEl.appendChild(container);
 
-      // Check if we've reached a point where a highlight should appear
-      i++;
-      setTimeout(step, speed);
+  function showNext() {
+    if (index < sentences.length) {
+      const sentence = sentences[index].trim();
+      if (!sentence) {
+        index++;
+        setTimeout(showNext, 300);
+        return;
+      }
+
+      // Highlight this sentence
+      const highlightedSentence = highlightText(sentence, highlightWords);
+      const span = document.createElement('span');
+      span.innerHTML = highlightedSentence + (sentence.endsWith('\n') ? '<br>' : ' ');
+      span.style.opacity = '0';
+      span.style.transform = 'translateY(8px)';
+      span.style.display = 'inline-block';
+      span.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+      container.appendChild(span);
+
+      // Trigger fade-in
+      setTimeout(() => {
+        span.style.opacity = '1';
+        span.style.transform = 'translateY(0)';
+      }, 50);
+
+      index++;
+      setTimeout(showNext, 800 + (sentence.length * 8)); // variable delay
     } else {
-      // Once typing is done, restore HTML with highlights
-      wrapper.outerHTML = htmlText;
-      // Remove typing cursor class (not needed since we replace)
+      // Final reveal
+      messageEl.classList.add('visible');
     }
   }
 
-  wrapper.classList.add('typing');
-  step();
+  setTimeout(showNext, 300);
 }
 
 function play() {
-  target.innerHTML = "";
-  typeText(apology, target, 28);
+  animateMessage(formattedMessage);
 }
 
 document.getElementById('replay').addEventListener('click', play);
-setTimeout(play, 700);
+play(); // Start immediately
 </script>
 </body>
 </html>
