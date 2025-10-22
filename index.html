@@ -1,100 +1,108 @@
+<!-- Save as: sorry_for_ananya_friend_bw.html -->
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Sorry Ananya — Apology Card</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>I'm Sorry, Ananya</title>
   <style>
-    :root{--bg:#0f172a;--card:#0b1220;--accent:#7c3aed;--muted:#9aa4bf;--glass:rgba(255,255,255,0.04)}
-    *{box-sizing:border-box;font-family:Inter,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
-    body{margin:0;min-height:100vh;display:grid;place-items:center;background:linear-gradient(160deg,#071021 0%, #071022 60%);color: #e6eef8}
-    .card{width:min(720px,92vw);background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:14px;padding:28px;box-shadow:0 8px 30px rgba(2,6,23,0.6);border:1px solid rgba(255,255,255,0.03)}
-    header{display:flex;gap:16px;align-items:center}
-    .avatar{width:64px;height:64px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#2563eb);display:grid;place-items:center;font-weight:700}
-    h1{margin:0;font-size:20px}
-    p.lead{color:var(--muted);margin:6px 0 18px}
+    :root{
+      --bg:#000000;
+      --card:#ffffff;
+      --accent:#7c7c7c;
+      --muted:#444444;
+    }
+    html,body{height:100%;margin:0;font-family:Inter,system-ui,Segoe UI,Arial;color:var(--muted);background:linear-gradient(160deg,#000000 0%, #222222 60%);display:flex;align-items:center;justify-content:center}
+    .card{
+      width:90%;
+      max-width:780px;
+      background:#ffffff;
+      border-radius:18px;
+      padding:34px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+      position:relative;
+      overflow:hidden;
+      border:1px solid rgba(0,0,0,0.1);
+      color:#000;
+    }
+    h1{margin:0 0 8px 0;font-size:30px;color:#000;letter-spacing:0.2px}
+    .sub{font-size:15px;margin-bottom:18px;color:var(--muted)}
+    .message{font-size:18px;line-height:1.6;min-height:120px;color:#000}
+    .meta{margin-top:20px;display:flex;gap:10px;align-items:center}
+    .from{font-weight:600;color:var(--muted)}
+    .btn{
+      margin-left:auto;
+      background:transparent;border:1px solid rgba(0,0,0,0.1);padding:8px 14px;border-radius:10px;color:var(--muted);cursor:pointer;
+    }
+    .icon {
+      position:absolute;right:-10px;top:-20px;width:150px;height:150px;opacity:0.05;
+      background: radial-gradient(circle at 30% 30%, var(--accent), transparent 40%);
+      transform: rotate(-15deg);
+      filter: blur(12px);
+    }
 
-    textarea{width:100%;min-height:170px;padding:14px;border-radius:10px;background:var(--glass);border:1px solid rgba(255,255,255,0.03);color:inherit;resize:vertical;font-size:15px}
-    .controls{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
-    button{background:var(--accent);border:none;padding:10px 14px;border-radius:10px;color:white;font-weight:600;cursor:pointer}
-    button.ghost{background:transparent;border:1px solid rgba(255,255,255,0.06)}
-    .hint{color:var(--muted);font-size:13px;margin-top:10px}
+    .typing { display:inline-block; border-right:2px solid rgba(0,0,0,0.6); padding-right:2px; animation: blink 1s steps(2, start) infinite;}
+    @keyframes blink { to { border-color: transparent; } }
 
-    .preview{margin-top:18px;background:rgba(255,255,255,0.02);padding:14px;border-radius:10px;border:1px solid rgba(255,255,255,0.02)}
-    .small{font-size:13px;color:var(--muted)}
-
-    @media (max-width:520px){.avatar{width:52px;height:52px}}
+    footer{font-size:13px;color:var(--muted);margin-top:18px}
+    @media (max-width:560px){h1{font-size:22px}.card{padding:20px}}
   </style>
 </head>
 <body>
-  <main class="card" role="main">
-    <header>
-      <div class="avatar">A</div>
-      <div>
-        <h1>Apology message — quick edit & send</h1>
-        <p class="lead">Use this to send a calm, genuine message to Ananya. Edit the text below if you want it more personal.</p>
-      </div>
-    </header>
+  <div class="card" role="main" aria-label="Apology card for Ananya">
+    <div class="icon" aria-hidden="true"></div>
 
-    <label for="message" class="small">Message (editable)</label>
-    <textarea id="message">Hey Ananya — I messed up and I’m really sorry. I believed something without checking with you first and confronted you instead of asking calmly. That was unfair and I understand why you felt hurt. I care about our friendship and I didn’t mean to make you feel disrespected. If you’re open to it, can we talk? I’ll listen — no excuses. I’m ready to accept any consequences and make it right. — Ansh</textarea>
+    <h1>Hey Ananya —</h1>
+    <div class="sub">I want to clear the air and apologize sincerely.</div>
 
-    <div class="controls">
-      <button id="copyBtn">Copy message</button>
-      <button id="waBtn" class="ghost">Open WhatsApp web (prefill)</button>
-      <button id="resetBtn" class="ghost">Reset to sincere template</button>
-      <button id="emailBtn" class="ghost">Open mail (prefill)</button>
+    <div class="message" id="message" aria-live="polite"></div>
+
+    <div class="meta">
+      <div class="from">— <span id="senderName">Ansh</span></div>
+      <button class="btn" id="replay">Replay</button>
     </div>
 
-    <div class="hint">Tip: Keep the tone short, take responsibility, avoid blaming others, and ask to talk. You’re already doing the right thing by apologizing.</div>
+    <footer>Click <strong>Replay</strong> to see the message again.</footer>
+  </div>
 
-    <div class="preview" aria-live="polite">
-      <strong>Preview</strong>
-      <p id="previewText" style="white-space:pre-wrap;margin:8px 0 0"></p>
-      <p class="small">Use "Copy" then paste where you chat with her, or use the WhatsApp button to open WhatsApp Web with the message prefilled.</p>
-    </div>
-  </main>
+<script>
+  const sender = "Ansh";
+  document.getElementById('senderName').textContent = sender;
 
-  <script>
-    const textarea = document.getElementById('message');
-    const preview = document.getElementById('previewText');
-    const copyBtn = document.getElementById('copyBtn');
-    const waBtn = document.getElementById('waBtn');
-    const emailBtn = document.getElementById('emailBtn');
-    const resetBtn = document.getElementById('resetBtn');
+  const apology = [
+    "I want to sincerely apologize, Ananya. I reacted without checking the facts first, and that was unfair.",
+    "I value our friendship a lot, and I don’t want a misunderstanding to come between us.",
+    "I take responsibility for my mistake and hope we can talk it out calmly.",
+    "I promise to be more careful and communicate better going forward."
+  ].join(" ");
 
-    function updatePreview(){ preview.textContent = textarea.value.trim(); }
-    textarea.addEventListener('input', updatePreview);
-    updatePreview();
+  const target = document.getElementById('message');
 
-    copyBtn.addEventListener('click', async ()=>{
-      try{
-        await navigator.clipboard.writeText(textarea.value.trim());
-        copyBtn.textContent = 'Copied ✓';
-        setTimeout(()=> copyBtn.textContent = 'Copy message',1400);
-      }catch(e){
-        copyBtn.textContent = 'Copy failed';
-        console.error(e);
+  function typeText(text, el, speed=28) {
+    el.textContent = "";
+    let i = 0;
+    const wrapper = document.createElement('span');
+    el.appendChild(wrapper);
+    function step(){
+      if(i < text.length){
+        wrapper.textContent += text.charAt(i);
+        i++;
+        setTimeout(step, speed);
+      } else {
+        wrapper.classList.remove('typing');
       }
-    });
+    }
+    wrapper.classList.add('typing');
+    step();
+  }
 
-    waBtn.addEventListener('click', ()=>{
-      const text = encodeURIComponent(textarea.value.trim());
-      // opens WhatsApp Web in new tab with prefilled message; user must choose Ananya's chat there
-      const url = 'https://web.whatsapp.com/send?text=' + text;
-      window.open(url, '_blank');
-    });
+  function play() {
+    target.innerHTML = "";
+    typeText(apology, target, 28);
+  }
 
-    emailBtn.addEventListener('click', ()=>{
-      const subject = encodeURIComponent('Can we talk?');
-      const body = encodeURIComponent(textarea.value.trim());
-      window.open('mailto:?subject=' + subject + '&body=' + body,'_blank');
-    });
-
-    resetBtn.addEventListener('click', ()=>{
-      textarea.value = 'Hey Ananya — I messed up and I\'m really sorry. I believed something without checking with you first and confronted you instead of asking calmly. That was unfair and I understand why you felt hurt. I care about our friendship and I didn\'t mean to make you feel disrespected. If you\'re open to it, can we talk? I\'ll listen — no excuses. I\'m ready to accept any consequences and make it right. — Ansh';
-      updatePreview();
-    });
-  </script>
+  document.getElementById('replay').addEventListener('click', play);
+  setTimeout(play, 700);
+</script>
 </body>
 </html>
