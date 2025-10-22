@@ -11,14 +11,14 @@
   --card: #ffffff;
   --text: #1a1a1a;
   --muted: #555;
-  --highlight: #d4a017; /* Warm gold */
+  --highlight: #d4a017;
   --highlight-bg: #fff9e6;
 }
 
 html, body {
   height: 100%;
   margin: 0;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-family: 'Inter', system-ui, sans-serif;
   background: var(--bg);
   display: flex;
   align-items: center;
@@ -50,21 +50,20 @@ h1 {
   font-size: 16px;
   margin-bottom: 24px;
   color: var(--muted);
-  font-weight: 500;
 }
 
 .message {
   font-size: 19px;
   min-height: 140px;
-  opacity: 0;
 }
 
 .word {
   display: inline-block;
   opacity: 0;
-  transform: translateY(10px);
+  transform: translateY(12px);
   transition: opacity 0.5s ease, transform 0.5s ease;
-  margin: 0 3px 6px 0;
+  margin-right: 4px;
+  margin-bottom: 6px;
 }
 
 .word.visible {
@@ -113,32 +112,11 @@ h1 {
   cursor: pointer;
   font-weight: 500;
   transition: all 0.25s ease;
-  font-size: 15px;
 }
 
 .btn:hover {
   border-color: var(--highlight);
   color: var(--highlight);
-}
-
-.floating {
-  position: absolute;
-  left: 20px;
-  bottom: -30px;
-  opacity: 0.5;
-  animation: floatUp 8s ease-in-out infinite;
-}
-
-.floating svg {
-  width: 60px;
-  height: 60px;
-  opacity: 0.7;
-}
-
-@keyframes floatUp {
-  0% { transform: translateY(0) translateX(0) rotate(0); opacity: 0.5; }
-  50% { transform: translateY(-100px) translateX(10px) rotate(8deg); opacity: 0.9; }
-  100% { transform: translateY(-220px) translateX(-8px) rotate(-6deg); opacity: 0.3; }
 }
 
 footer {
@@ -152,7 +130,6 @@ footer {
   h1 { font-size: 24px; }
   .card { padding: 24px; }
   .message { font-size: 17px; }
-  .word { margin: 0 2px 5px 0; }
 }
 </style>
 </head>
@@ -160,17 +137,11 @@ footer {
 <div class="card" role="main" aria-label="A sincere apology for Ananya">
   <h1>Hey Ananya —</h1>
   <div class="sub">I owe you a real apology.</div>
-  <div class="message" id="message" aria-live="polite"></div>
+  <div class="message" id="message"></div>
   
   <div class="meta">
     <div class="from">— <span id="senderName">Ansh</span></div>
     <button class="btn" id="replay">Replay</button>
-  </div>
-  
-  <div class="floating" aria-hidden="true">
-    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M12 21s-7.5-4.35-9.1-8.02C1.86 8.9 6.1 5 12 9.5 17.9 5 22.14 8.9 21.1 12.98 19.5 16.65 12 21 12 21z" fill="#e0e0e0"></path>
-    </svg>
   </div>
   
   <footer>Click <strong>Replay</strong> to read again.</footer>
@@ -181,74 +152,72 @@ const sender = "Ansh";
 document.getElementById('senderName').textContent = sender;
 
 // Your exact message
-const rawMessage = `I want to sincerely apologize, Ananya. I reacted without checking the facts first, and that was unfair.
+const messageText = `I want to sincerely apologize, Ananya. I reacted without checking the facts first, and that was unfair.
 I value our friendship a lot, and I don’t want a misunderstanding to come between us.
 I take responsibility for my mistake and hope we can talk it out calmly.
 I promise to be more careful and communicate better going forward.`;
 
-// Words to highlight (case-insensitive)
-const highlightWords = [
+// Words to highlight (case-insensitive, without punctuation)
+const highlightSet = new Set([
   'apologize', 'unfair', 'friendship', 'responsibility',
   'calmly', 'careful', 'better'
-];
+]);
 
-function shouldHighlight(word) {
-  const clean = word.toLowerCase().replace(/[^\w]/g, '');
-  return highlightWords.includes(clean);
+function cleanWord(word) {
+  return word.toLowerCase().replace(/[^a-z]/g, '');
 }
 
-function animateWordByWord(text) {
+function animateMessage() {
   const messageEl = document.getElementById('message');
   messageEl.innerHTML = '';
   
-  // Normalize whitespace and split into words (keep punctuation attached)
-  const words = text.trim().split(/\s+/).filter(w => w.length > 0);
+  // Split into words while preserving spaces and line breaks as needed
+  const words = messageText.split(/(\s+)/).filter(part => part !== ''); // keeps spaces as items
   
   let delay = 0;
-  const baseDelay = 120; // ms between words
+  const wordDelay = 130; // ms per word
 
-  words.forEach((word, i) => {
-    const isEndOfSentence = /[.!?]$/.test(word);
-    const wordDelay = delay;
-    
-    // Create word container
+  words.forEach((part, i) => {
+    // If it's whitespace or newline, insert as text
+    if (/^\s+$/.test(part)) {
+      messageEl.appendChild(document.createTextNode(part));
+      // Add extra pause after end of sentence
+      if (i > 0 && words[i - 1] && /[.!?]$/.test(words[i - 1])) {
+        delay += 500;
+      }
+      return;
+    }
+
+    // It's a real word
     const wordSpan = document.createElement('span');
     wordSpan.className = 'word';
-    wordSpan.textContent = word + (i < words.length - 1 ? ' ' : '');
-    
-    // Highlight if needed
-    if (shouldHighlight(word)) {
+    wordSpan.textContent = part;
+
+    // Check if this word should be highlighted
+    if (highlightSet.has(cleanWord(part))) {
       const highlightSpan = document.createElement('span');
       highlightSpan.className = 'highlight';
-      highlightSpan.textContent = word;
-      wordSpan.innerHTML = ''; // clear text
+      highlightSpan.textContent = part;
+      wordSpan.innerHTML = '';
       wordSpan.appendChild(highlightSpan);
-      if (i < words.length - 1) wordSpan.appendChild(document.createTextNode(' '));
     }
-    
+
     messageEl.appendChild(wordSpan);
-    
-    // Schedule reveal
+
+    // Schedule animation
     setTimeout(() => {
       wordSpan.classList.add('visible');
-    }, wordDelay);
-    
-    // Increase delay
-    delay += baseDelay;
-    
-    // Add extra pause at end of sentence
-    if (isEndOfSentence) {
-      delay += 600;
-    }
+    }, delay);
+
+    delay += wordDelay;
   });
 }
 
-function play() {
-  animateWordByWord(rawMessage);
-}
+// Replay functionality
+document.getElementById('replay').addEventListener('click', animateMessage);
 
-document.getElementById('replay').addEventListener('click', play);
-play(); // Start on load
+// Start animation on load
+animateMessage();
 </script>
 </body>
 </html>
