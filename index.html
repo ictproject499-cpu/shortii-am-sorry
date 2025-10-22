@@ -1,132 +1,100 @@
-<!-- Save as: sorry_for_ananya.html -->
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>I'm Sorry, Ananya</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sorry Ananya — Apology Card</title>
   <style>
-    :root{
-      --bg:#0f1724;
-      --card:#0b1220;
-      --accent:#ff6b8a;
-      --muted:#bcd0e6;
-    }
-    html,body{height:100%;margin:0;font-family:Inter,system-ui,Segoe UI,Arial;color:var(--muted);background:linear-gradient(160deg,#071023 0%, #0b1020 60%);display:flex;align-items:center;justify-content:center}
-    .card{
-      width:90%;
-      max-width:780px;
-      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-      border-radius:18px;
-      padding:34px;
-      box-shadow: 0 10px 30px rgba(2,6,23,0.6);
-      position:relative;
-      overflow:hidden;
-      border:1px solid rgba(255,255,255,0.03);
-    }
-    h1{margin:0 0 8px 0;font-size:30px;color:#fff;letter-spacing:0.2px}
-    .sub{font-size:15px;margin-bottom:18px;color:var(--muted)}
-    .message{font-size:18px;line-height:1.6;color:#eef6ff;min-height:120px}
-    .meta{margin-top:20px;display:flex;gap:10px;align-items:center}
-    .from{font-weight:600;color:var(--muted)}
-    .btn{
-      margin-left:auto;
-      background:transparent;border:1px solid rgba(255,255,255,0.06);padding:8px 14px;border-radius:10px;color:var(--muted);cursor:pointer;
-    }
-    .heart {
-      position:absolute;right:-10px;top:-20px;width:200px;height:200px;opacity:0.08;
-      background: radial-gradient(circle at 30% 30%, var(--accent), transparent 40%);
-      transform: rotate(-15deg);
-      filter: blur(14px);
-    }
+    :root{--bg:#0f172a;--card:#0b1220;--accent:#7c3aed;--muted:#9aa4bf;--glass:rgba(255,255,255,0.04)}
+    *{box-sizing:border-box;font-family:Inter,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+    body{margin:0;min-height:100vh;display:grid;place-items:center;background:linear-gradient(160deg,#071021 0%, #071022 60%);color: #e6eef8}
+    .card{width:min(720px,92vw);background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:14px;padding:28px;box-shadow:0 8px 30px rgba(2,6,23,0.6);border:1px solid rgba(255,255,255,0.03)}
+    header{display:flex;gap:16px;align-items:center}
+    .avatar{width:64px;height:64px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#2563eb);display:grid;place-items:center;font-weight:700}
+    h1{margin:0;font-size:20px}
+    p.lead{color:var(--muted);margin:6px 0 18px}
 
-    /* typing cursor */
-    .typing { display:inline-block; border-right:2px solid rgba(255,255,255,0.6); padding-right:2px; animation: blink 1s steps(2, start) infinite;}
-    @keyframes blink { to { border-color: transparent; } }
+    textarea{width:100%;min-height:170px;padding:14px;border-radius:10px;background:var(--glass);border:1px solid rgba(255,255,255,0.03);color:inherit;resize:vertical;font-size:15px}
+    .controls{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+    button{background:var(--accent);border:none;padding:10px 14px;border-radius:10px;color:white;font-weight:600;cursor:pointer}
+    button.ghost{background:transparent;border:1px solid rgba(255,255,255,0.06)}
+    .hint{color:var(--muted);font-size:13px;margin-top:10px}
 
-    /* floating hearts */
-    .floating {
-      position:absolute;left:12px;bottom:-40px;opacity:0.85;
-      animation: floatUp 7s ease-in-out infinite;
-    }
-    .floating svg { width:64px;height:64px; }
-    @keyframes floatUp {
-      0% { transform: translateY(0) translateX(0) rotate(0) scale(0.9); opacity:0.8; }
-      50%{ transform: translateY(-120px) translateX(8px) rotate(10deg) scale(1.05); opacity:1; }
-      100%{ transform: translateY(-260px) translateX(-10px) rotate(-8deg) scale(0.9); opacity:0.6; }
-    }
+    .preview{margin-top:18px;background:rgba(255,255,255,0.02);padding:14px;border-radius:10px;border:1px solid rgba(255,255,255,0.02)}
+    .small{font-size:13px;color:var(--muted)}
 
-    footer{font-size:13px;color:#9fb6d9;margin-top:18px}
-    @media (max-width:560px){h1{font-size:22px}.card{padding:20px}}
+    @media (max-width:520px){.avatar{width:52px;height:52px}}
   </style>
 </head>
 <body>
-  <div class="card" role="main" aria-label="Apology card for Ananya">
-    <div class="heart" aria-hidden="true"></div>
+  <main class="card" role="main">
+    <header>
+      <div class="avatar">A</div>
+      <div>
+        <h1>Apology message — quick edit & send</h1>
+        <p class="lead">Use this to send a calm, genuine message to Ananya. Edit the text below if you want it more personal.</p>
+      </div>
+    </header>
 
-    <h1>Hey Ananya —</h1>
-    <div class="sub">I messed up, and I want to say something from the heart.</div>
+    <label for="message" class="small">Message (editable)</label>
+    <textarea id="message">Hey Ananya — I messed up and I’m really sorry. I believed something without checking with you first and confronted you instead of asking calmly. That was unfair and I understand why you felt hurt. I care about our friendship and I didn’t mean to make you feel disrespected. If you’re open to it, can we talk? I’ll listen — no excuses. I’m ready to accept any consequences and make it right. — Ansh</textarea>
 
-    <div class="message" id="message" aria-live="polite"></div>
-
-    <div class="meta">
-      <div class="from">— <span id="senderName">Ansh</span></div>
-      <button class="btn" id="replay">Replay</button>
+    <div class="controls">
+      <button id="copyBtn">Copy message</button>
+      <button id="waBtn" class="ghost">Open WhatsApp web (prefill)</button>
+      <button id="resetBtn" class="ghost">Reset to sincere template</button>
+      <button id="emailBtn" class="ghost">Open mail (prefill)</button>
     </div>
 
-    <div class="floating" aria-hidden="true">
-      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <path d="M12 21s-7.5-4.35-9.1-8.02C1.86 8.9 6.1 5 12 9.5 17.9 5 22.14 8.9 21.1 12.98 19.5 16.65 12 21 12 21z" fill="url(#g)"></path>
-        <defs><linearGradient id="g" x1="0" x2="1"><stop offset="0" stop-color="#ff8fab"/><stop offset="1" stop-color="#ff6b8a"/></linearGradient></defs>
-      </svg>
+    <div class="hint">Tip: Keep the tone short, take responsibility, avoid blaming others, and ask to talk. You’re already doing the right thing by apologizing.</div>
+
+    <div class="preview" aria-live="polite">
+      <strong>Preview</strong>
+      <p id="previewText" style="white-space:pre-wrap;margin:8px 0 0"></p>
+      <p class="small">Use "Copy" then paste where you chat with her, or use the WhatsApp button to open WhatsApp Web with the message prefilled.</p>
     </div>
+  </main>
 
-    <footer>Click <strong>Replay</strong> to see the message again.</footer>
-  </div>
+  <script>
+    const textarea = document.getElementById('message');
+    const preview = document.getElementById('previewText');
+    const copyBtn = document.getElementById('copyBtn');
+    const waBtn = document.getElementById('waBtn');
+    const emailBtn = document.getElementById('emailBtn');
+    const resetBtn = document.getElementById('resetBtn');
 
-<script>
-  // Set sender (change if needed)
-  const sender = "Ansh";
-  document.getElementById('senderName').textContent = sender;
+    function updatePreview(){ preview.textContent = textarea.value.trim(); }
+    textarea.addEventListener('input', updatePreview);
+    updatePreview();
 
-  // The apology text — short & heartfelt + small personal line for Ananya
-  const apology = [
-    "I’m truly sorry, Ananya. I didn’t mean to hurt you.",
-    "You mean a lot to me and losing your trust hurts more than anything.",
-    "I take responsibility for my mistake and I promise to do better.",
-    "If you're willing, I'd love to talk, listen, and make things right. 💛"
-  ].join(" ");
-
-  const target = document.getElementById('message');
-
-  function typeText(text, el, speed=28) {
-    el.textContent = "";
-    let i = 0;
-    const wrapper = document.createElement('span');
-    el.appendChild(wrapper);
-    function step(){
-      if(i < text.length){
-        wrapper.textContent += text.charAt(i);
-        i++;
-        setTimeout(step, speed);
-      } else {
-        // remove typing cursor after finish
-        wrapper.classList.remove('typing');
+    copyBtn.addEventListener('click', async ()=>{
+      try{
+        await navigator.clipboard.writeText(textarea.value.trim());
+        copyBtn.textContent = 'Copied ✓';
+        setTimeout(()=> copyBtn.textContent = 'Copy message',1400);
+      }catch(e){
+        copyBtn.textContent = 'Copy failed';
+        console.error(e);
       }
-    }
-    wrapper.classList.add('typing');
-    step();
-  }
+    });
 
-  function play() {
-    target.innerHTML = "";
-    typeText(apology, target, 28);
-  }
+    waBtn.addEventListener('click', ()=>{
+      const text = encodeURIComponent(textarea.value.trim());
+      // opens WhatsApp Web in new tab with prefilled message; user must choose Ananya's chat there
+      const url = 'https://web.whatsapp.com/send?text=' + text;
+      window.open(url, '_blank');
+    });
 
-  document.getElementById('replay').addEventListener('click', play);
+    emailBtn.addEventListener('click', ()=>{
+      const subject = encodeURIComponent('Can we talk?');
+      const body = encodeURIComponent(textarea.value.trim());
+      window.open('mailto:?subject=' + subject + '&body=' + body,'_blank');
+    });
 
-  // auto-play once after small delay
-  setTimeout(play, 700);
-</script>
+    resetBtn.addEventListener('click', ()=>{
+      textarea.value = 'Hey Ananya — I messed up and I\'m really sorry. I believed something without checking with you first and confronted you instead of asking calmly. That was unfair and I understand why you felt hurt. I care about our friendship and I didn\'t mean to make you feel disrespected. If you\'re open to it, can we talk? I\'ll listen — no excuses. I\'m ready to accept any consequences and make it right. — Ansh';
+      updatePreview();
+    });
+  </script>
 </body>
 </html>
