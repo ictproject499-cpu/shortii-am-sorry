@@ -1,64 +1,220 @@
-<!-- Save as: sorry_for_ananya_friend_bw.html -->
+<!-- Save as: sorry_for_ananya.html -->
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>I'm Sorry, Ananya</title>
-  <style>
-    :root{
-      --bg:#000000;
-      --card:#ffffff;
-      --accent:#7c7c7c;
-      --muted:#444444;
-    }
-    html,body{height:100%;margin:0;font-family:Inter,system-ui,Segoe UI,Arial;color:var(--muted);background:linear-gradient(160deg,#000000 0%, #222222 60%);display:flex;align-items:center;justify-content:center}
-    .card{
-      width:90%;
-      max-width:780px;
-      background:#ffffff;
-      border-radius:18px;
-      padding:34px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
-      position:relative;
-      overflow:hidden;
-      border:1px solid rgba(0,0,0,0.1);
-      color:#000;
-      transform: scale(0.9);
-      opacity: 0;
-      animation: cardFadeIn 0.8s forwards;
-    }
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>I'm Sorry, Ananya</title>
+<style>
+:root {
+  --bg: #000; /* Pure black background */
+  --card: #0a0a0a; /* Slightly lighter black for card */
+  --accent: #ccc; /* Neutral accent instead of pink */
+  --muted: #aaa; /* Light gray for muted text */
+}
 
-    h1{margin:0 0 8px 0;font-size:30px;color:#000;letter-spacing:0.2px}
-    .sub{font-size:15px;margin-bottom:18px;color:var(--muted)}
-    .message{font-size:18px;line-height:1.6;min-height:120px;color:#000; position: relative; display:inline-block;}
-    .meta{margin-top:20px;display:flex;gap:10px;align-items:center}
-    .from{font-weight:600;color:var(--muted)}
-    .btn{
-      margin-left:auto;
-      background:transparent;border:1px solid rgba(0,0,0,0.1);padding:8px 14px;border-radius:10px;color:var(--muted);cursor:pointer;
-    }
-    .icon {
-      position:absolute;right:-10px;top:-20px;width:150px;height:150px;opacity:0.05;
-      background: radial-gradient(circle at 30% 30%, var(--accent), transparent 40%);
-      transform: rotate(-15deg);
-      filter: blur(12px);
-    }
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: Inter, system-ui, Segoe UI, Arial, sans-serif;
+  color: var(--muted);
+  background: var(--bg); /* Solid black */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-    /* typing cursor */
-    .typing { display:inline-block; border-right:2px solid rgba(0,0,0,0.6); padding-right:2px; animation: blink 1s steps(2, start) infinite;}
-    @keyframes blink { to { border-color: transparent; } }
+.card {
+  width: 90%;
+  max-width: 780px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+  border-radius: 18px;
+  padding: 34px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.05);
+}
 
-    /* card fade-in animation */
-    @keyframes cardFadeIn {
-      0% { transform: scale(0.9); opacity: 0; }
-      50% { transform: scale(1.05); opacity: 1; }
-      100% { transform: scale(1); }
-    }
+h1 {
+  margin: 0 0 8px 0;
+  font-size: 30px;
+  color: #fff;
+  letter-spacing: 0.2px;
+}
 
-    footer{font-size:13px;color:var(--muted);margin-top:18px}
-    @media (max-width:560px){h1{font-size:22px}.card{padding:20px}}
-  </style>
+.sub {
+  font-size: 15px;
+  margin-bottom: 18px;
+  color: var(--muted);
+}
+
+.message {
+  font-size: 18px;
+  line-height: 1.6;
+  color: #eee;
+  min-height: 120px;
+}
+
+.meta {
+  margin-top: 20px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.from {
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.btn {
+  margin-left: auto;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.1);
+  padding: 8px 14px;
+  border-radius: 10px;
+  color: var(--muted);
+  cursor: pointer;
+  transition: border-color 0.3s;
+}
+
+.btn:hover {
+  border-color: rgba(255,255,255,0.3);
+}
+
+/* Subtle white glow instead of pink */
+.heart {
+  position: absolute;
+  right: -10px;
+  top: -20px;
+  width: 200px;
+  height: 200px;
+  opacity: 0.06;
+  background: radial-gradient(circle at 30% 30%, #ffffff, transparent 40%);
+  transform: rotate(-15deg);
+  filter: blur(14px);
+}
+
+/* Typing cursor */
+.typing {
+  display: inline-block;
+  border-right: 2px solid rgba(255,255,255,0.7);
+  padding-right: 2px;
+  animation: blink 1s steps(2, start) infinite;
+}
+
+@keyframes blink {
+  to { border-color: transparent; }
+}
+
+/* Floating hearts – now white */
+.floating {
+  position: absolute;
+  left: 12px;
+  bottom: -40px;
+  opacity: 0.7;
+  animation: floatUp 7s ease-in-out infinite;
+}
+
+.floating svg {
+  width: 64px;
+  height: 64px;
+}
+
+@keyframes floatUp {
+  0% {
+    transform: translateY(0) translateX(0) rotate(0) scale(0.9);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translateY(-120px) translateX(8px) rotate(10deg) scale(1.05);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-260px) translateX(-10px) rotate(-8deg) scale(0.9);
+    opacity: 0.5;
+  }
+}
+
+footer {
+  font-size: 13px;
+  color: #888;
+  margin-top: 18px;
+}
+
+@media (max-width: 560px) {
+  h1 { font-size: 22px; }
+  .card { padding: 20px; }
+}
+</style>
 </head>
 <body>
-  <div class="card" role="main" aria-label="Apology card for
+<div class="card" role="main" aria-label="Apology card for Ananya">
+  <div class="heart" aria-hidden="true"></div>
+  <h1>Hey Ananya —</h1>
+  <div class="sub">I messed up, and I want to say something from the heart.</div>
+  <div class="message" id="message" aria-live="polite"></div>
+  <div class="meta">
+    <div class="from">— <span id="senderName">Ansh</span></div>
+    <button class="btn" id="replay">Replay</button>
+  </div>
+  <div class="floating" aria-hidden="true">
+    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M12 21s-7.5-4.35-9.1-8.02C1.86 8.9 6.1 5 12 9.5 17.9 5 22.14 8.9 21.1 12.98 19.5 16.65 12 21 12 21z" fill="url(#g)"></path>
+      <defs>
+        <linearGradient id="g" x1="0" x2="1">
+          <stop offset="0" stop-color="#ddd"/>
+          <stop offset="1" stop-color="#bbb"/>
+        </linearGradient>
+      </defs>
+    </svg>
+  </div>
+  <footer>Click <strong>Replay</strong> to see the message again.</footer>
+</div>
+
+<script>
+// Set sender (change if needed)
+const sender = "Ansh";
+document.getElementById('senderName').textContent = sender;
+
+// The apology text — short & heartfelt + small personal line for Ananya
+const apology = [
+  "I’m truly sorry, Ananya. I didn’t mean to hurt you.",
+  "You mean a lot to me and losing your trust hurts more than anything.",
+  "I take responsibility for my mistake and I promise to do better.",
+  "If you're willing, I'd love to talk, listen, and make things right. 💛"
+].join(" ");
+
+const target = document.getElementById('message');
+
+function typeText(text, el, speed = 28) {
+  el.textContent = "";
+  let i = 0;
+  const wrapper = document.createElement('span');
+  el.appendChild(wrapper);
+
+  function step() {
+    if (i < text.length) {
+      wrapper.textContent += text.charAt(i);
+      i++;
+      setTimeout(step, speed);
+    } else {
+      wrapper.classList.remove('typing');
+    }
+  }
+
+  wrapper.classList.add('typing');
+  step();
+}
+
+function play() {
+  target.innerHTML = "";
+  typeText(apology, target, 28);
+}
+
+document.getElementById('replay').addEventListener('click', play);
+setTimeout(play, 700);
+</script>
+</body>
+</html>
