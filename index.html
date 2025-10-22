@@ -11,7 +11,7 @@
   --card: #ffffff;
   --text: #1a1a1a;
   --muted: #555;
-  --highlight: #d4a017; /* Gold for emotional emphasis */
+  --highlight: #d4a017; /* Warm gold */
   --highlight-bg: #fff9e6;
 }
 
@@ -36,7 +36,7 @@ html, body {
   position: relative;
   overflow: hidden;
   border: 1px solid rgba(0,0,0,0.08);
-  line-height: 1.6;
+  line-height: 1.7;
 }
 
 h1 {
@@ -44,7 +44,6 @@ h1 {
   font-size: 32px;
   font-weight: 700;
   color: #000;
-  letter-spacing: -0.2px;
 }
 
 .sub {
@@ -56,14 +55,19 @@ h1 {
 
 .message {
   font-size: 19px;
-  color: var(--text);
   min-height: 140px;
   opacity: 0;
-  transform: translateY(10px);
-  transition: opacity 0.4s ease, transform 0.4s ease;
 }
 
-.message.visible {
+.word {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  margin: 0 3px 6px 0;
+}
+
+.word.visible {
   opacity: 1;
   transform: translateY(0);
 }
@@ -148,6 +152,7 @@ footer {
   h1 { font-size: 24px; }
   .card { padding: 24px; }
   .message { font-size: 17px; }
+  .word { margin: 0 2px 5px 0; }
 }
 </style>
 </head>
@@ -175,7 +180,7 @@ footer {
 const sender = "Ansh";
 document.getElementById('senderName').textContent = sender;
 
-// Updated message with key words to highlight
+// Your exact message
 const rawMessage = `I want to sincerely apologize, Ananya. I reacted without checking the facts first, and that was unfair.
 I value our friendship a lot, and I don’t want a misunderstanding to come between us.
 I take responsibility for my mistake and hope we can talk it out calmly.
@@ -187,69 +192,63 @@ const highlightWords = [
   'calmly', 'careful', 'better'
 ];
 
-function highlightText(text, words) {
-  let result = text.replace(/\n/g, '<br>');
-  const regex = new RegExp(`\\b(${words.join('|')})\\b`, 'gi');
-  result = result.replace(regex, '<span class="highlight">$1</span>');
-  return result;
+function shouldHighlight(word) {
+  const clean = word.toLowerCase().replace(/[^\w]/g, '');
+  return highlightWords.includes(clean);
 }
 
-const formattedMessage = highlightText(rawMessage, highlightWords);
-const messageEl = document.getElementById('message');
-
-function animateMessage(html) {
+function animateWordByWord(text) {
+  const messageEl = document.getElementById('message');
   messageEl.innerHTML = '';
-  messageEl.classList.remove('visible');
   
-  // Split into sentences (by period, question mark, or line break)
-  const sentences = rawMessage.split(/(?<=[.!?])\s+/);
+  // Normalize whitespace and split into words (keep punctuation attached)
+  const words = text.trim().split(/\s+/).filter(w => w.length > 0);
   
-  let index = 0;
-  const container = document.createElement('div');
-  messageEl.appendChild(container);
+  let delay = 0;
+  const baseDelay = 120; // ms between words
 
-  function showNext() {
-    if (index < sentences.length) {
-      const sentence = sentences[index].trim();
-      if (!sentence) {
-        index++;
-        setTimeout(showNext, 300);
-        return;
-      }
-
-      // Highlight this sentence
-      const highlightedSentence = highlightText(sentence, highlightWords);
-      const span = document.createElement('span');
-      span.innerHTML = highlightedSentence + (sentence.endsWith('\n') ? '<br>' : ' ');
-      span.style.opacity = '0';
-      span.style.transform = 'translateY(8px)';
-      span.style.display = 'inline-block';
-      span.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-      container.appendChild(span);
-
-      // Trigger fade-in
-      setTimeout(() => {
-        span.style.opacity = '1';
-        span.style.transform = 'translateY(0)';
-      }, 50);
-
-      index++;
-      setTimeout(showNext, 800 + (sentence.length * 8)); // variable delay
-    } else {
-      // Final reveal
-      messageEl.classList.add('visible');
+  words.forEach((word, i) => {
+    const isEndOfSentence = /[.!?]$/.test(word);
+    const wordDelay = delay;
+    
+    // Create word container
+    const wordSpan = document.createElement('span');
+    wordSpan.className = 'word';
+    wordSpan.textContent = word + (i < words.length - 1 ? ' ' : '');
+    
+    // Highlight if needed
+    if (shouldHighlight(word)) {
+      const highlightSpan = document.createElement('span');
+      highlightSpan.className = 'highlight';
+      highlightSpan.textContent = word;
+      wordSpan.innerHTML = ''; // clear text
+      wordSpan.appendChild(highlightSpan);
+      if (i < words.length - 1) wordSpan.appendChild(document.createTextNode(' '));
     }
-  }
-
-  setTimeout(showNext, 300);
+    
+    messageEl.appendChild(wordSpan);
+    
+    // Schedule reveal
+    setTimeout(() => {
+      wordSpan.classList.add('visible');
+    }, wordDelay);
+    
+    // Increase delay
+    delay += baseDelay;
+    
+    // Add extra pause at end of sentence
+    if (isEndOfSentence) {
+      delay += 600;
+    }
+  });
 }
 
 function play() {
-  animateMessage(formattedMessage);
+  animateWordByWord(rawMessage);
 }
 
 document.getElementById('replay').addEventListener('click', play);
-play(); // Start immediately
+play(); // Start on load
 </script>
 </body>
 </html>
