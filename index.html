@@ -1,4 +1,4 @@
-<!-- Save as: sorry_for_ananya_friend_bw.html -->
+<!-- Save as: sorry_for_ananya_friend_bw_new_animation.html -->
 <!doctype html>
 <html lang="en">
 <head>
@@ -24,10 +24,14 @@
       overflow:hidden;
       border:1px solid rgba(0,0,0,0.1);
       color:#000;
+      transform: scale(0.9);
+      opacity: 0;
+      animation: cardFadeIn 0.8s forwards;
     }
+
     h1{margin:0 0 8px 0;font-size:30px;color:#000;letter-spacing:0.2px}
     .sub{font-size:15px;margin-bottom:18px;color:var(--muted)}
-    .message{font-size:18px;line-height:1.6;min-height:120px;color:#000}
+    .message{font-size:18px;line-height:1.6;min-height:120px;color:#000; position: relative;}
     .meta{margin-top:20px;display:flex;gap:10px;align-items:center}
     .from{font-weight:600;color:var(--muted)}
     .btn{
@@ -41,8 +45,26 @@
       filter: blur(12px);
     }
 
+    /* typing cursor */
     .typing { display:inline-block; border-right:2px solid rgba(0,0,0,0.6); padding-right:2px; animation: blink 1s steps(2, start) infinite;}
     @keyframes blink { to { border-color: transparent; } }
+
+    /* card fade-in animation */
+    @keyframes cardFadeIn {
+      0% { transform: scale(0.9); opacity: 0; }
+      50% { transform: scale(1.05); opacity: 1; }
+      100% { transform: scale(1); }
+    }
+
+    /* message shake animation on replay */
+    @keyframes shake {
+      0%{transform: translateX(0)}
+      20%{transform: translateX(-4px)}
+      40%{transform: translateX(4px)}
+      60%{transform: translateX(-4px)}
+      80%{transform: translateX(4px)}
+      100%{transform: translateX(0)}
+    }
 
     footer{font-size:13px;color:var(--muted);margin-top:18px}
     @media (max-width:560px){h1{font-size:22px}.card{padding:20px}}
@@ -98,7 +120,9 @@
 
   function play() {
     target.innerHTML = "";
+    target.style.animation = 'shake 0.5s';
     typeText(apology, target, 28);
+    setTimeout(()=>{ target.style.animation = ''; }, 500);
   }
 
   document.getElementById('replay').addEventListener('click', play);
